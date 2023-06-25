@@ -1,0 +1,48 @@
+
+version: "3.9"
+
+services:
+  b-elastic:
+    image: elasticsearch:7.4.2
+    container_name: b-elastic
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms750m -Xmx750m
+      - xpack.security.enabled=false
+      - cluster.name=docker-cluster
+    volumes:
+      - ./:/project
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - elastic
+
+  web-server:
+#    image: client:0.0.1
+    container_name: web-server
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - b-elastic
+    links:
+      - b-elastic:b-elastic
+    environment:
+      - SERVER_PORT= 8080
+      - TZ=Europe/Moscow
+      - LOG_MODE=dev
+      - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=b-elastic:9200
+    networks:
+      - elastic
+
+
+networks:
+    elastic:
+      external: true
+      driver: bridge
+
+
