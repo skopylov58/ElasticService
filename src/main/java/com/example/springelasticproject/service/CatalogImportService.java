@@ -7,6 +7,7 @@ import com.example.springelasticproject.repository.CategoryRepository;
 import com.example.springelasticproject.repository.ProductRepository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,13 +32,13 @@ public class CatalogImportService {
 
     @Transactional
     public void importCatalogFromUrl(String url) {
+
+        String xml = getXmlFromUrl(url);
+        ObjectMapper objectMapper = new XmlMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
         try {
-            String xml = getXmlFromUrl(url);
-            ObjectMapper objectMapper = new XmlMapper();
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
             DcCatalog dcCatalog = objectMapper.readValue(xml, DcCatalog.class);
-
             List<Category> categories = dcCatalog.getDeliveryService().getCategories().getCategory();
             List<Product> products = dcCatalog.getDeliveryService().getProducts().getProduct();
 
@@ -51,7 +52,7 @@ public class CatalogImportService {
                 System.out.println(product);
             }
 
-            categoryRepository.saveAll(categories);
+//            categoryRepository.saveAll(categories);
             productRepository.saveAll(products);
 
         } catch (Exception e) {

@@ -1,0 +1,11 @@
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/model/CatalogImportRequest.java
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/controller/ProductController.java
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/repository/CategoryRepository.java
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/model/Product.java
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/repository/ProductRepository.java
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/model/DcCatalog.java
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/controller/CatalogController.java
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/service/ProductService.java
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/model/Category.java
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/SpringElasticProjectApplication.java
+/home/andrey/IdeaProjects/ElasticService/src/main/java/com/example/springelasticproject/service/CatalogImportService.java

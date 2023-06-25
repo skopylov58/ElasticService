@@ -18,7 +18,11 @@ public class ProductService {
     }
 
     public List<Product> searchProduct (String query, int categoryId) {
-        return productRepository.searchProducts(query, categoryId);
+        return productRepository.searchProductsByNameAndCategoryId(query, categoryId);
+    }
+
+    public List<Product> searchProductTest (String query)  {
+        return productRepository.searchProductsTest(query);
     }
 
     public Iterable<Product> findAll() {

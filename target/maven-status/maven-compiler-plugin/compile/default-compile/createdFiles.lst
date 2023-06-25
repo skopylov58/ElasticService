@@ -1,0 +1,14 @@
+com/example/springelasticproject/model/Category.class
+com/example/springelasticproject/SpringElasticProjectApplication.class
+com/example/springelasticproject/model/DcCatalog$DeliveryService.class
+com/example/springelasticproject/repository/ProductRepository.class
+com/example/springelasticproject/model/DcCatalog.class
+com/example/springelasticproject/service/ProductService.class
+com/example/springelasticproject/model/CatalogImportRequest.class
+com/example/springelasticproject/model/DcCatalog$DeliveryService$Categories.class
+com/example/springelasticproject/service/CatalogImportService.class
+com/example/springelasticproject/model/DcCatalog$DeliveryService$Products.class
+com/example/springelasticproject/controller/CatalogController.class
+com/example/springelasticproject/repository/CategoryRepository.class
+com/example/springelasticproject/model/Product.class
+com/example/springelasticproject/controller/ProductController.class

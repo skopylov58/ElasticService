@@ -26,7 +26,14 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> searchProducts(@RequestParam String query, @RequestParam int categoryId) {
-        return productService.searchProduct(query,categoryId);
+    public List<Product> searchProducts(@RequestParam(value = "query", required = false) String query, @RequestParam(required = false) Integer categoryId) {
+        if (categoryId == null) {
+            return productService.searchProductTest(query);
+        }
+        else {
+            return productService.searchProduct(query,categoryId);
+        }
+
+
     }
 }

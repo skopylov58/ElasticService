@@ -10,6 +10,10 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends ElasticsearchRepository<Product, Long> {
-    @Query("{\"bool\": {\"must\": [{\"match\": {\"name\": \"?0\"}}], \"filter\": [{\"term\": {\"categoryId\": \"?1\"}}]}}")
-    List<Product> searchProducts(String query, int categoryId);
+    @Query("{\"bool\": {\"must\": [{\"match\": {\"name\": \"*?0*\"}}], \"filter\": [{\"term\": {\"categoryId\": \"?1\"}}]}}")
+    List<Product> searchProductsByNameAndCategoryId(String query, int categoryId);
+
+
+    @Query("{\"bool\": {\"must\": [{\"match\": {\"name\": \"?0\"}}]}}")
+    List<Product> searchProductsTest(String query);
 }
