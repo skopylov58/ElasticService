@@ -1,4 +1,4 @@
-# ElasticService
+# ElasticService (Тестовое задание)
 
 Проект Spring Elastic представляет собой веб-приложение, основанное на фреймворке Spring Boot и интегрированное с Elasticsearch. 
 
