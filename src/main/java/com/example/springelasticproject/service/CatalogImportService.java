@@ -43,18 +43,18 @@ public class CatalogImportService {
 
         try {
             DcCatalog dcCatalog = objectMapper.readValue(xml, DcCatalog.class);
-            List<Category> categories = dcCatalog.getDeliveryService().getCategories().getCategory();
+//            List<Category> categories = dcCatalog.getDeliveryService().getCategories().getCategory();
             List<Product> products = dcCatalog.getDeliveryService().getProducts().getProduct();
-
-            System.out.println("Categories:");
-            for (Category category : categories) {
-                System.out.println(category);
-            }
-
-            System.out.println("\nProducts:");
-            for (Product product : products) {
-                System.out.println(product);
-            }
+//
+//            System.out.println("Categories:");
+//            for (Category category : categories) {
+//                System.out.println(category);
+//            }
+//
+//            System.out.println("\nProducts:");
+//            for (Product product : products) {
+//                System.out.println(product);
+//            }
 
 //            categoryRepository.saveAll(categories);
             productRepository.saveAll(products);
