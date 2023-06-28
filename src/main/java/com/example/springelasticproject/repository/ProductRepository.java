@@ -15,5 +15,5 @@ public interface ProductRepository extends ElasticsearchRepository<Product, Long
 
 
     @Query("{\"bool\": {\"must\": [{\"match\": {\"name\": \"?0\"}}]}}")
-    List<Product> searchProductsTest(String query);
+    List<Product> searchProductsByName(String query);
 }

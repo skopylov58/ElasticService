@@ -10,8 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 
 import java.io.IOException;
@@ -33,9 +35,9 @@ public class CatalogImportService {
     //FIXME Изменить сигнатуру метода на 
     //public void importCatalogFromUrl(String url) throws IOException 
     @Transactional
-    public void importCatalogFromUrl(String url) {
+    public void importCatalogFromUrl(String url) throws IOException {
 
-        String xml = getXmlFromUrl(url);
+        String xml = getContent(url);
         ObjectMapper objectMapper = new XmlMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
@@ -57,7 +59,7 @@ public class CatalogImportService {
 //            categoryRepository.saveAll(categories);
             productRepository.saveAll(products);
 
-        //FIXME Убрать catch 
+        //FIXME Убрать catch
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,30 +67,10 @@ public class CatalogImportService {
     }
 
 
-    //FIXME Пробросить исключение наружу
-    private static String getXmlFromUrl(String XmlUrl) {
-        String xmlContent= "";
-        try {
-            URL url = new URL(XmlUrl);
-            xmlContent = getContentFromUrl(url);
-        //FIXME Убрать catch
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return xmlContent;
-    }
-
-    
-    private static String getContentFromUrl(URL url) throws IOException {
-        StringBuilder content = new StringBuilder();
-        //TODO Использовать HTTPClient или RestTemplate 
-        //вместо new Scanner(url.openStream())
-        try (Scanner scanner = new Scanner(url.openStream())) {
-            while (scanner.hasNextLine()) {
-                content.append(scanner.nextLine());
-            }
-        }
-        return content.toString();
+    private String getContent(String url) throws IOException{
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        return responseEntity.getBody();
     }
 
 }
