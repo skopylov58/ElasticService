@@ -23,8 +23,14 @@ public class CatalogController {
     @PostMapping("/import")
     public ResponseEntity<String> importCatalog(@RequestBody CatalogImportRequest request){
         String url = request.getUrl();
+        //TODO Проверить валидность url, вернуть 400 BadRequest если url malformed
+        
+        //TODO можно послать запрос HEAD на проверку существования ресурса
+        //Еcли не существует - вернуть 404 Not found
 
+        //FIXME Обработать исключения, вернуть 500 в случае исключения
         catalogImportService.importCatalogFromUrl(url);
+        //TODO В случае успешного импорта лучше вернуть 201 - Created
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 

@@ -30,6 +30,8 @@ public class CatalogImportService {
         this.categoryRepository = categoryRepository;
     }
 
+    //FIXME Изменить сигнатуру метода на 
+    //public void importCatalogFromUrl(String url) throws IOException 
     @Transactional
     public void importCatalogFromUrl(String url) {
 
@@ -55,6 +57,7 @@ public class CatalogImportService {
 //            categoryRepository.saveAll(categories);
             productRepository.saveAll(products);
 
+        //FIXME Убрать catch 
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,19 +65,24 @@ public class CatalogImportService {
     }
 
 
+    //FIXME Пробросить исключение наружу
     private static String getXmlFromUrl(String XmlUrl) {
         String xmlContent= "";
         try {
             URL url = new URL(XmlUrl);
             xmlContent = getContentFromUrl(url);
+        //FIXME Убрать catch
         } catch (IOException e) {
             e.printStackTrace();
         }
         return xmlContent;
     }
 
+    
     private static String getContentFromUrl(URL url) throws IOException {
         StringBuilder content = new StringBuilder();
+        //TODO Использовать HTTPClient или RestTemplate 
+        //вместо new Scanner(url.openStream())
         try (Scanner scanner = new Scanner(url.openStream())) {
             while (scanner.hasNextLine()) {
                 content.append(scanner.nextLine());
