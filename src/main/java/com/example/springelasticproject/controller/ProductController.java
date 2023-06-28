@@ -27,6 +27,7 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<Product> searchProducts(@RequestParam(value = "query", required = false) String query, @RequestParam(required = false) Integer categoryId) {
+        //FIXME Тут все параметры обьявлены необязательными, возможен NPE!!!
         if (categoryId == null) {
             return productService.searchProductTest(query);
         }
