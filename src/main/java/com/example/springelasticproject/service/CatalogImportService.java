@@ -32,7 +32,7 @@ public class CatalogImportService {
         this.categoryRepository = categoryRepository;
     }
 
-    //FIXME Изменить сигнатуру метода на 
+    //FIXME Изменить сигнатуру метода на UPD: Исправлено
     //public void importCatalogFromUrl(String url) throws IOException 
     @Transactional
     public void importCatalogFromUrl(String url) throws IOException {
@@ -41,10 +41,9 @@ public class CatalogImportService {
         ObjectMapper objectMapper = new XmlMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        try {
-            DcCatalog dcCatalog = objectMapper.readValue(xml, DcCatalog.class);
+        DcCatalog dcCatalog = objectMapper.readValue(xml, DcCatalog.class);
 //            List<Category> categories = dcCatalog.getDeliveryService().getCategories().getCategory();
-            List<Product> products = dcCatalog.getDeliveryService().getProducts().getProduct();
+        List<Product> products = dcCatalog.getDeliveryService().getProducts().getProduct();
 //
 //            System.out.println("Categories:");
 //            for (Category category : categories) {
@@ -57,16 +56,16 @@ public class CatalogImportService {
 //            }
 
 //            categoryRepository.saveAll(categories);
-            productRepository.saveAll(products);
+        productRepository.saveAll(products);
 
-        //FIXME Убрать catch
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //FIXME Убрать catch UPD: Исправлено
 
     }
 
 
+
+    //TODO Использовать HTTPClient или RestTemplate
+    // вместо new Scanner(url.openStream()) UPD: Исправлено
     private String getContent(String url) throws IOException{
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);

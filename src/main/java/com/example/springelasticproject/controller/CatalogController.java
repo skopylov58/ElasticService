@@ -34,7 +34,7 @@ public class CatalogController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Malformed URL");
         }
-        //TODO Проверить валидность url, вернуть 400 BadRequest если url malformed
+        //TODO Проверить валидность url, вернуть 400 BadRequest если url malformed UPD: Исправлено
 
         //TODO можно послать запрос HEAD на проверку существования ресурса
         //Еcли не существует - вернуть 404 Not found
@@ -46,14 +46,15 @@ public class CatalogController {
 //            if (responseCode != HttpURLConnection.HTTP_OK) {
 //                return ResponseEntity.badRequest().body("404 not found");
 //            }
-            //FIXME Обработать исключения, вернуть 500 в случае исключения
+            //FIXME Обработать исключения, вернуть 500 в случае исключения UPD: Неисправлено.
+            // Почемо-то именно сайт из примера возвращает 404.
             catalogImportService.importCatalogFromUrl(url);
 
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred");
         }
 
-        //TODO В случае успешного импорта лучше вернуть 201 - Created
+        //TODO В случае успешного импорта лучше вернуть 201 - Created UPD: Исправлено
         return new ResponseEntity<>("Created", HttpStatus.CREATED);
     }
 
