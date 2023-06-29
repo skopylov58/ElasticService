@@ -21,8 +21,8 @@ public class ProductService {
         return productRepository.searchProductsByNameAndCategoryId(query, categoryId);
     }
 
-    public List<Product> searchProductTest (String query)  {
-        return productRepository.searchProductsTest(query);
+    public List<Product> searchProductByName (String query)  {
+        return productRepository.searchProductsByName(query);
     }
 
     public Iterable<Product> findAll() {

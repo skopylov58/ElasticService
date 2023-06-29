@@ -10,8 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 
 import java.io.IOException;
@@ -30,57 +32,44 @@ public class CatalogImportService {
         this.categoryRepository = categoryRepository;
     }
 
+    //FIXME Изменить сигнатуру метода на UPD: Исправлено
+    //public void importCatalogFromUrl(String url) throws IOException 
     @Transactional
-    public void importCatalogFromUrl(String url) {
+    public void importCatalogFromUrl(String url) throws IOException {
 
-        String xml = getXmlFromUrl(url);
+        String xml = getContent(url);
         ObjectMapper objectMapper = new XmlMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        try {
-            DcCatalog dcCatalog = objectMapper.readValue(xml, DcCatalog.class);
-            List<Category> categories = dcCatalog.getDeliveryService().getCategories().getCategory();
-            List<Product> products = dcCatalog.getDeliveryService().getProducts().getProduct();
-
-            System.out.println("Categories:");
-            for (Category category : categories) {
-                System.out.println(category);
-            }
-
-            System.out.println("\nProducts:");
-            for (Product product : products) {
-                System.out.println(product);
-            }
+        DcCatalog dcCatalog = objectMapper.readValue(xml, DcCatalog.class);
+//            List<Category> categories = dcCatalog.getDeliveryService().getCategories().getCategory();
+        List<Product> products = dcCatalog.getDeliveryService().getProducts().getProduct();
+//
+//            System.out.println("Categories:");
+//            for (Category category : categories) {
+//                System.out.println(category);
+//            }
+//
+//            System.out.println("\nProducts:");
+//            for (Product product : products) {
+//                System.out.println(product);
+//            }
 
 //            categoryRepository.saveAll(categories);
-            productRepository.saveAll(products);
+        productRepository.saveAll(products);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //FIXME Убрать catch UPD: Исправлено
 
     }
 
 
-    private static String getXmlFromUrl(String XmlUrl) {
-        String xmlContent= "";
-        try {
-            URL url = new URL(XmlUrl);
-            xmlContent = getContentFromUrl(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return xmlContent;
-    }
 
-    private static String getContentFromUrl(URL url) throws IOException {
-        StringBuilder content = new StringBuilder();
-        try (Scanner scanner = new Scanner(url.openStream())) {
-            while (scanner.hasNextLine()) {
-                content.append(scanner.nextLine());
-            }
-        }
-        return content.toString();
+    //TODO Использовать HTTPClient или RestTemplate
+    // вместо new Scanner(url.openStream()) UPD: Исправлено
+    private String getContent(String url) throws IOException{
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        return responseEntity.getBody();
     }
 
 }
